@@ -26,9 +26,10 @@ void setup() {
   Serial.begin(9600);
 
   Rtc.Begin(); // Initialize the DS1302 RTC module
-  RtcDateTime compiled = RtcDateTime(__DATE__, __TIME__);
-  if (!Rtc.IsDateTimeValid() || Rtc.GetDateTime() < compiled) {
-    Rtc.SetDateTime(compiled);
+
+  // Set the current time if it's not already set in the RTC
+  if (!Rtc.IsDateTimeValid()) {
+    Rtc.SetDateTime(__DATE__, __TIME__);
   }
 }
 
@@ -37,7 +38,7 @@ void loop() {
   int hour = now.Hour(); // Extract the hour component
   int minute = now.Minute(); // Extract the minute component
 
-  int timeValue = hour * 100 + minute; // Combine the hour and minute into a single value
+  int timeValue = hour * 60 + minute; // Combine the hour and minute into a single value
 
   sevseg.setNumber(timeValue); // Display the current time on the 7-segment display
   sevseg.refreshDisplay(); // Must run repeatedly; don't use blocking code (ex: delay()) in the loop() function or this won't work right
