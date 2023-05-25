@@ -8,7 +8,7 @@ RtcDS1302<ThreeWire> Rtc(myWire);
 #define SHIFT_PIN_SHCP 6
 #define SHIFT_PIN_STCP 5
 #define SHIFT_PIN_DS 4
-
+int timeValue = 9999;
 SevSegShift sevseg(SHIFT_PIN_DS, SHIFT_PIN_SHCP, SHIFT_PIN_STCP, 1, true);
 
 void setup() {
@@ -27,27 +27,26 @@ void setup() {
 
   Rtc.Begin(); // Initialize the DS1302 RTC module
 
-  // Set the current time if it's not already set in the RTC
-  if (!Rtc.IsDateTimeValid()) {
-    Rtc.SetDateTime(__DATE__, __TIME__);
+  RtcDateTime compiled = RtcDateTime(__DATE__, __TIME__); // Get the current compile time
+
+  if (!Rtc.IsDateTimeValid() || Rtc.GetDateTime() < compiled) {
+    Rtc.SetDateTime(compiled); // Set the current time if invalid or older than compiled time
   }
 }
 
 void loop() {
+  sevseg.setNumber(timeValue); // Display the current time on the 7-segment display
+  sevseg.refreshDisplay(); // Must run repeatedly; don't use blocking code (ex: delay()) in the loop() function or this won't work right
   RtcDateTime now = Rtc.GetDateTime(); // Retrieve the current time from the RTC
   int hour = now.Hour(); // Extract the hour component
   int minute = now.Minute(); // Extract the minute component
 
   int timeValue = hour * 60 + minute; // Combine the hour and minute into a single value
+  //Serial.print("Current Time: ");
+  //Serial.print(hour);
+  //Serial.print(":");
+  //Serial.print(minute);
+  //Serial.println();
 
-  sevseg.setNumber(timeValue); // Display the current time on the 7-segment display
-  sevseg.refreshDisplay(); // Must run repeatedly; don't use blocking code (ex: delay()) in the loop() function or this won't work right
-
-  Serial.print("Current Time: ");
-  Serial.print(hour);
-  Serial.print(":");
-  Serial.print(minute);
-  Serial.println();
-
-  delay(1000); // Delay for one second (adjust if needed)
+  //delay(10); // Delay for one second (adjust if needed)
 }
