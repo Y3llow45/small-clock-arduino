@@ -37,10 +37,10 @@ void setup() {
   pinMode(SHIFT_PIN_DS, OUTPUT);
 
   // Set digit pins as outputs
-  pinMode(12, OUTPUT);  // Digit 0
-  pinMode(11, OUTPUT);  // Digit 1
-  pinMode(10, OUTPUT);  // Digit 2
-  pinMode(9, OUTPUT);   // Digit 3
+  pinMode(12, OUTPUT);  // Digit 1
+  pinMode(11, OUTPUT);  // Digit 2
+  pinMode(10, OUTPUT);  // Digit 3
+  pinMode(9, OUTPUT);   // Digit 4
 }
 
 void loop() {
