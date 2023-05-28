@@ -18,11 +18,9 @@ const byte digitPatterns[] = {
 
 void shiftOutPattern(byte pattern) {
   // Shift out a byte pattern to the shift register
-  for (int i = 7; i >= 0; i--) {
-    digitalWrite(SHIFT_PIN_SHCP, LOW);
-    digitalWrite(SHIFT_PIN_DS, bitRead(pattern, i));
-    digitalWrite(SHIFT_PIN_SHCP, HIGH);
-  }
+  digitalWrite(SHIFT_PIN_SHCP, LOW);
+  shiftOut(SHIFT_PIN_DS, SHIFT_PIN_SHCP, LSBFIRST, pattern);
+  digitalWrite(SHIFT_PIN_SHCP, HIGH);
 }
 
 void displayDigit(int digit, int value) {
@@ -52,15 +50,20 @@ void loop() {
 
   // Convert the number to individual digits
   int digit1 = 1;
-  int digit2 = 8;
-  int digit3 = 2;
-  int digit4 = 3;
+  int digit2 = 2;
+  int digit3 = 3;
+  int digit4 = 4;
 
   // Display each digit sequentially
   displayDigit(12, digit1);  // Digit 0
+  delay(5);  // Adjust the delay as needed for brightness
   displayDigit(11, digit2);  // Digit 1
+  delay(5);  // Adjust the delay as needed for brightness
   displayDigit(10, digit3);  // Digit 2
+  delay(5);  // Adjust the delay as needed for brightness
   displayDigit(9, digit4);   // Digit 3
+  delay(5);  // Adjust the delay as needed for brightness
 
-  delay(1000);  // Delay for one second (adjust if needed)
+  // Delay before refreshing the display
+  //delay(1000);  // Delay for one second (adjust if needed)
 }
