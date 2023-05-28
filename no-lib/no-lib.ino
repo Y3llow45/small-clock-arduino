@@ -18,17 +18,20 @@ const byte digitPatterns[] = {
 
 void shiftOutPattern(byte pattern) {
   // Shift out a byte pattern to the shift register
-  digitalWrite(SHIFT_PIN_STCP, LOW);
-  shiftOut(SHIFT_PIN_DS, SHIFT_PIN_SHCP, LSBFIRST, pattern);
-  digitalWrite(SHIFT_PIN_STCP, HIGH);
+  for (int i = 7; i >= 0; i--) {
+    digitalWrite(SHIFT_PIN_SHCP, LOW);
+    digitalWrite(SHIFT_PIN_DS, bitRead(pattern, i));
+    digitalWrite(SHIFT_PIN_SHCP, HIGH);
+  }
 }
 
 void displayDigit(int digit, int value) {
   // Display a single digit on the 7-segment display
   shiftOutPattern(digitPatterns[value]);
-  digitalWrite(digit, HIGH);
-  delay(1);  // Adjust the delay as needed for brightness
+  digitalWrite(SHIFT_PIN_STCP, LOW);
   digitalWrite(digit, LOW);
+  digitalWrite(SHIFT_PIN_STCP, HIGH);
+  digitalWrite(digit, HIGH);
 }
 
 void setup() {
@@ -37,10 +40,10 @@ void setup() {
   pinMode(SHIFT_PIN_DS, OUTPUT);
 
   // Set digit pins as outputs
-  pinMode(12, OUTPUT);  // Digit 1
-  pinMode(11, OUTPUT);  // Digit 2
-  pinMode(10, OUTPUT);  // Digit 3
-  pinMode(9, OUTPUT);   // Digit 4
+  pinMode(12, OUTPUT);  // Digit 0
+  pinMode(11, OUTPUT);  // Digit 1
+  pinMode(10, OUTPUT);  // Digit 2
+  pinMode(9, OUTPUT);   // Digit 3
 }
 
 void loop() {
@@ -48,10 +51,10 @@ void loop() {
   int number = 1234;
 
   // Convert the number to individual digits
-  int digit1 = number / 1000;
-  int digit2 = (number / 100) % 10;
-  int digit3 = (number / 10) % 10;
-  int digit4 = number % 10;
+  int digit1 = 1;
+  int digit2 = 8;
+  int digit3 = 2;
+  int digit4 = 3;
 
   // Display each digit sequentially
   displayDigit(12, digit1);  // Digit 0
