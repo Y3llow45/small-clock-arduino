@@ -1,6 +1,7 @@
 const int latchPin = 5;   // Shift register latch pin
 const int clockPin = 6;   // Shift register clock pin
 const int dataPin = 4;    // Shift register data pin
+byte data;
 
 const byte digitPatterns[] = {
   B00111111,  // Digit 0
@@ -45,15 +46,51 @@ void displayDigits(int number) {
   digits[2] = (number / 10) % 10;
   digits[3] = number % 10;
   
-  for (int i = 0; i < 4; i++) {
-    digitalWrite(latchPin, LOW);
-    shiftOut(dataPin, clockPin, LSBFIRST, digitPatterns[digits[i]]);
-    digitalWrite(latchPin, HIGH);
-    
-    for (int j = 0; j < 4; j++) {
-      digitalWrite(digitPins[j], i == j ? LOW : HIGH);
+  for (int i = 1; i < 5; i++) {
+    switch(i){
+      case 1:
+        digitalWrite(12, LOW);
+        digitalWrite(11, HIGH);
+        digitalWrite(10, HIGH);
+        digitalWrite(9, HIGH);
+        // get byte data from digitPatterns[] for the current number digits[0]
+        // if number is 4, data should be set to B01100110
+        // call updateShiftRegister and pass data
+        break;
+      case 2:
+        digitalWrite(12, HIGH);
+        digitalWrite(11, LOW);
+        digitalWrite(10, HIGH);
+        digitalWrite(9, HIGH);
+        // same think from before just use digits[1] and call updateShiftRegister with propper data
+        break;
+      case 3:
+        digitalWrite(12, HIGH);
+        digitalWrite(11, HIGH);
+        digitalWrite(10, LOW);
+        digitalWrite(9, HIGH);
+        // same think from before just use digits[2] and call updateShiftRegister with propper data
+        break;
+      case 4:
+        digitalWrite(12, HIGH);
+        digitalWrite(11, HIGH);
+        digitalWrite(10, HIGH);
+        digitalWrite(9, LOW);
+        // same think from before just use digits[3] and call updateShiftRegister with propper data
+        break;
     }
-    
-    delay(5);
+    //for (int j = 0; j < 8; j++) { //Don't need that
+    //  bitSet(currentSegment, j);
+    //  updateShiftRegister();
+    //  delay(200);
+    //}   
+    delay(1);
   }
+}
+
+void updateShiftRegister(data)
+{
+   digitalWrite(latchPin, LOW);
+   shiftOut(dataPin, clockPin, LSBFIRST, data);
+   digitalWrite(latchPin, HIGH);
 }
