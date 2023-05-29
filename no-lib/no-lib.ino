@@ -34,42 +34,51 @@ void setup() {
 }
 
 void loop() {
-  displayDigits(5812);
+  displayDigits(1234);
 }
 
 void displayDigits(int number) {
   int digits[4];
   
-  digits[0] = number / 1000;
-  digits[1] = (number / 100) % 10;
-  digits[2] = (number / 10) % 10;
-  digits[3] = number % 10;
+  digits[3] = number / 1000;
+  digits[0] = (number / 100) % 10;
+  digits[1] = (number / 10) % 10;
+  digits[2] = number % 10;
   
-  digitalWrite(digitPins[0], LOW);
-  digitalWrite(digitPins[1], HIGH);
-  digitalWrite(digitPins[2], HIGH);
-  digitalWrite(digitPins[3], HIGH);
-  updateShiftRegister(digitPatterns[digits[0]]);
-  delay(2);
-  digitalWrite(digitPins[0], HIGH);
-  digitalWrite(digitPins[1], LOW);
-  digitalWrite(digitPins[2], HIGH);
-  digitalWrite(digitPins[3], HIGH);
-  updateShiftRegister(digitPatterns[digits[1]]);
-  delay(2);
-  digitalWrite(digitPins[0], HIGH);
-  digitalWrite(digitPins[1], HIGH);
-  digitalWrite(digitPins[2], LOW);
-  digitalWrite(digitPins[3], HIGH);
-  updateShiftRegister(digitPatterns[digits[2]]);
-  delay(2);
-  digitalWrite(digitPins[0], HIGH);
-  digitalWrite(digitPins[1], HIGH);
-  digitalWrite(digitPins[2], HIGH);
-  digitalWrite(digitPins[3], LOW);
+  byte digitPinsState = 0;  // Store the state of digit pins
+
+  digitPinsState |= (1 << 0);  // Set the first digit pin
   updateShiftRegister(digitPatterns[digits[3]]);
-  delay(2);
+  digitalWrite(latchPin, LOW);
+  shiftOut(dataPin, clockPin, MSBFIRST, digitPinsState);  // Update all digit pins at once
+  digitalWrite(latchPin, HIGH);
+  
+  digitPinsState &= ~(1 << 0);  // Clear the first digit pin
+  
+  digitPinsState |= (1 << 1);  // Set the second digit pin
+  updateShiftRegister(digitPatterns[digits[0]]);
+  digitalWrite(latchPin, LOW);
+  shiftOut(dataPin, clockPin, MSBFIRST, digitPinsState);
+  digitalWrite(latchPin, HIGH);
+  
+  digitPinsState &= ~(1 << 1);  // Clear the second digit pin
+  
+  digitPinsState |= (1 << 2);  // Set the third digit pin
+  updateShiftRegister(digitPatterns[digits[1]]);
+  digitalWrite(latchPin, LOW);
+  shiftOut(dataPin, clockPin, MSBFIRST, digitPinsState);
+  digitalWrite(latchPin, HIGH);
+  
+  digitPinsState &= ~(1 << 2);  // Clear the third digit pin
+  
+  digitPinsState |= (1 << 3);  // Set the fourth digit pin
+  updateShiftRegister(digitPatterns[digits[2]]);
+  digitalWrite(latchPin, LOW);
+  shiftOut(dataPin, clockPin, MSBFIRST, digitPinsState);
+  digitalWrite(latchPin, HIGH);
 }
+
+
 
 void updateShiftRegister(byte data) {
   digitalWrite(latchPin, LOW);
