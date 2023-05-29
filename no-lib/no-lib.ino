@@ -1,6 +1,7 @@
 const int latchPin = 5;   // Shift register latch pin
 const int clockPin = 6;   // Shift register clock pin
 const int dataPin = 4;    // Shift register data pin
+int digits[4];
 
 const byte digitPatterns[] = {
   B00111111,  // Digit 0
@@ -34,11 +35,12 @@ void setup() {
 }
 
 void loop() {
-  displayDigits(1203);
+  displayDigits(3201);
+  //delay(1);
 }
 
 void displayDigits(int number) {
-  int digits[4];
+
   
   digits[3] = number / 1000;
   digits[0] = (number / 100) % 10;
@@ -49,30 +51,34 @@ void displayDigits(int number) {
   digitalWrite(digitPins[1], HIGH);
   digitalWrite(digitPins[2], HIGH);
   digitalWrite(digitPins[3], HIGH);
-  updateShiftRegister(digitPatterns[digits[0]]);
   //delay(2);
+  updateShiftRegister(digitPatterns[digits[0]]);
+  
   digitalWrite(digitPins[0], HIGH);
   digitalWrite(digitPins[1], LOW);
   digitalWrite(digitPins[2], HIGH);
   digitalWrite(digitPins[3], HIGH);
-  updateShiftRegister(digitPatterns[digits[1]]);
   //delay(2);
+  updateShiftRegister(digitPatterns[digits[1]]);
+  
   digitalWrite(digitPins[0], HIGH);
   digitalWrite(digitPins[1], HIGH);
   digitalWrite(digitPins[2], LOW);
   digitalWrite(digitPins[3], HIGH);
-  updateShiftRegister(digitPatterns[digits[2]]);
   //delay(2);
+  updateShiftRegister(digitPatterns[digits[2]]);
+  
   digitalWrite(digitPins[0], HIGH);
   digitalWrite(digitPins[1], HIGH);
   digitalWrite(digitPins[2], HIGH);
   digitalWrite(digitPins[3], LOW);
-  updateShiftRegister(digitPatterns[digits[3]]);
   //delay(2);
+  updateShiftRegister(digitPatterns[digits[3]]);
+  digitalWrite(digitPins[3], HIGH);
+  
 }
 
 void updateShiftRegister(byte data) {
-  delay(5);
   digitalWrite(latchPin, LOW);
   for (int i = 7; i >= 0; i--) {
     digitalWrite(clockPin, LOW);

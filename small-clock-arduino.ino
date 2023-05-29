@@ -7,6 +7,7 @@ RtcDS1302<ThreeWire> Rtc(myWire);
 const int latchPin = 5;   // Shift register latch pin
 const int clockPin = 6;   // Shift register clock pin
 const int dataPin = 4;    // Shift register data pin
+int digits[4];
 
 const byte digitPatterns[] = {
   B00111111,  // Digit 0
@@ -46,6 +47,7 @@ void setup() {
 }
 
 void loop() {
+  Serial.begin(9600);
   RtcDateTime now = Rtc.GetDateTime(); // Retrieve the current time from the RTC
   int hour = now.Hour(); // Extract the hour component
   int minute = now.Minute(); // Extract the minute component
@@ -55,12 +57,11 @@ void loop() {
 }
 
 void displayDigits(int number) {
-  int digits[4];
-  
   digits[3] = number / 1000;
   digits[0] = (number / 100) % 10;
   digits[1] = (number / 10) % 10;
   digits[2] = number % 10;
+  
   
   digitalWrite(digitPins[0], LOW);
   digitalWrite(digitPins[1], HIGH);
@@ -82,10 +83,11 @@ void displayDigits(int number) {
   digitalWrite(digitPins[2], HIGH);
   digitalWrite(digitPins[3], LOW);
   updateShiftRegister(digitPatterns[digits[3]]);
+  digitalWrite(digitPins[3], HIGH);
 }
 
 void updateShiftRegister(byte data) {
-  delay(3);
+  //delay(1);
   digitalWrite(latchPin, LOW);
   for (int i = 7; i >= 0; i--) {
     digitalWrite(clockPin, LOW);
