@@ -47,12 +47,10 @@ void setup() {
 }
 
 void loop() {
-  Serial.begin(9600);
   RtcDateTime now = Rtc.GetDateTime(); // Retrieve the current time from the RTC
   int hour = now.Hour(); // Extract the hour component
   int minute = now.Minute(); // Extract the minute component
   int timeValue = hour*100 + minute; // Combine the hour and minute into a single value
-  delay(1); // Delay for one ms (adjust if needed)
   displayDigits(timeValue);
 }
 
@@ -61,7 +59,6 @@ void displayDigits(int number) {
   digits[0] = (number / 100) % 10;
   digits[1] = (number / 10) % 10;
   digits[2] = number % 10;
-  
   
   digitalWrite(digitPins[0], LOW);
   digitalWrite(digitPins[1], HIGH);
