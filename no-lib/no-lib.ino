@@ -73,6 +73,10 @@ void displayDigits(int number) {
 
 void updateShiftRegister(byte data) {
   digitalWrite(latchPin, LOW);
-  shiftOut(dataPin, clockPin, LSBFIRST, data);
+  for (int i = 7; i >= 0; i--) {
+    digitalWrite(clockPin, LOW);
+    digitalWrite(dataPin, (data >> i) & 1);
+    digitalWrite(clockPin, HIGH);
+  }
   digitalWrite(latchPin, HIGH);
 }
