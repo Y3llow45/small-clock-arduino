@@ -50,15 +50,27 @@ void loop() {
   RtcDateTime now = Rtc.GetDateTime(); // Retrieve the current time from the RTC
   int hour = now.Hour(); // Extract the hour component
   int minute = now.Minute(); // Extract the minute component
-  int timeValue = hour*100 + minute; // Combine the hour and minute into a single value
-  displayDigits(timeValue);
+  //int timeValue = hour*100 + minute; // Combine the hour and minute into a single value
+  int hourDigit1 = hour / 10;
+  int hourDigit2 = hour % 10;
+
+  // Extract the individual digits of the minute
+  int minuteDigit1 = minute / 10;
+  int minuteDigit2 = minute % 10;
+  //displayDigits(timeValue);
+  displayDigits(hourDigit1, hourDigit2, minuteDigit1, minuteDigit2);
 }
 
-void displayDigits(int number) {
-  digits[3] = number / 1000;
-  digits[0] = (number / 100) % 10;
-  digits[1] = (number / 10) % 10;
-  digits[2] = number % 10;
+//void displayDigits(int number) {
+//  digits[3] = number / 1000;
+//  digits[0] = (number / 100) % 10;
+//  digits[1] = (number / 10) % 10;
+//  digits[2] = number % 10;
+void displayDigits(int digit1, int digit2, int digit3, int digit4) {
+  digits[3] = digit1;
+  digits[0] = digit2;
+  digits[1] = digit3;
+  digits[2] = digit4;
   
   digitalWrite(digitPins[0], LOW);
   digitalWrite(digitPins[1], HIGH);
@@ -84,7 +96,7 @@ void displayDigits(int number) {
 }
 
 void updateShiftRegister(byte data) {
-  //delay(1);
+  delay(1);
   digitalWrite(latchPin, LOW);
   for (int i = 7; i >= 0; i--) {
     digitalWrite(clockPin, LOW);
