@@ -1,4 +1,4 @@
-### small clock using 4 digit 7 segment display and real time module
+<h3>Small Clock using 4 Digit 7 Segment Display and Real Time Clock Module</h3>
 
 # Parts:
 
