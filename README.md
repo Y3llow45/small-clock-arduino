@@ -13,6 +13,7 @@
 
 ![Screenshot (880)](https://github.com/Y3llow45/small-clock-arduino/assets/68009977/0d6dfb67-5a85-4130-a51f-ee9f318e2c67)
 
+![7segment4digit_schema-2690630837](https://github.com/Y3llow45/small-clock-arduino/assets/68009977/38d3d0b8-1eb8-4c98-892c-7313c0ade956)
 # Issues you may encounter: 
 
 ## __Messed up digits:__
