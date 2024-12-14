@@ -1,5 +1,8 @@
 <h3>Small Clock using 4 Digit 7 Segment Display and Real Time Clock Module</h3>
 
+<img src="https://github.com/user-attachments/assets/12da2f08-cf99-49c5-8259-26686c8fd7c1" width="700px">
+<img src="https://github.com/user-attachments/assets/e5197008-e83d-4b5e-ad7e-71db11732fa8" width="700px">
+
 # Parts:
 
 #### 4 digit 7 segment display (COMMON_CATHODE in this example. The other one is COMMON_ANODE)
