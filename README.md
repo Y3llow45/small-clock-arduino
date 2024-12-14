@@ -1,7 +1,7 @@
 <h3>Small Clock using 4 Digit 7 Segment Display and Real Time Clock Module</h3>
 
-<img src="https://github.com/user-attachments/assets/12da2f08-cf99-49c5-8259-26686c8fd7c1" width="700px">
-<img src="https://github.com/user-attachments/assets/e5197008-e83d-4b5e-ad7e-71db11732fa8" width="700px">
+<img src="https://github.com/user-attachments/assets/53cb0418-ca66-46e1-83b4-53dc47f9f369" width="500px">
+<img src="https://github.com/user-attachments/assets/c2507271-b54e-4046-8fc4-5398dd562237" width="500px">
 
 # Parts:
 
